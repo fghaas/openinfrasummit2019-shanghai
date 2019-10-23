@@ -11,6 +11,7 @@ Reveal.initialize({
 
     transition: 'fade',
 
+    totalTime: 35*60,
 
     menu: {
         themes: false,
@@ -20,15 +21,11 @@ Reveal.initialize({
         markers: true
     },
 
-
-
-
-     multiplex: {
-        secret: multiplex_config['secret'],
-        id: multiplex_config['socketId'],
-        url: "https://reveal-js-multiplex-ccjbegmaii.now.sh"
-     },
-
+    multiplex: {
+       secret: multiplex_config['secret'],
+       id: multiplex_config['socketId'],
+       url: "https://reveal-js-multiplex-ccjbegmaii.now.sh"
+    },
 
     // Optional libraries used to extend on reveal.js
     dependencies: [
