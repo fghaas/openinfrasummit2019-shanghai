@@ -2,9 +2,9 @@
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
 
-    controls: false,
+    controls: true,
 
-    progress: false,
+    progress: true,
     history: true,
     center: true,
     showNotes: false,
@@ -15,7 +15,7 @@ Reveal.initialize({
     menu: {
         themes: false,
         transitions: false,
-        openButton: false,
+        openButton: true,
         openSlideNumber: true,
         markers: true
     },
