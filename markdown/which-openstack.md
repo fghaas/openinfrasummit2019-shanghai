@@ -1,6 +1,29 @@
 # 1
 ## Which OpenStack am I running on?
 
+<!-- Note -->
+Suppose you just have access to a virtual machine that you know is
+running on OpenStack. You might not even have spun that VM up by
+yourself, someone else might have done that for you. All you have is
+secure shell access, and you would like to know what OpenStack
+platform that VM is running on.
+
+Any takers? Anyone want to offer up a suggestion on how to that?
+
+
+## `dmidecode`
+
+<!-- Note -->
+The easiest way to get to that information is actually this command,
+which you might already be quite familiar with.
+
+`dmidecode` gives you a large amount of information about your system,
+and at the very top of its output, it has this:
+
+
+## dmidecode output <!-- .element class="hidden" -->
+
+`dmidecode`
 
 ```
 Handle 0x0100, DMI type 1, 27 bytes
@@ -14,4 +37,14 @@ System Information
         SKU Number: Not Specified
         Family: Virtual Machine
 ```
-`dmidecode`
+
+<!-- Note -->
+This information is actually populated by Nova, in conjunction with
+Libvirt, and not only does it tell you the Nova release you’re running
+on, it also gives you some information about the OpenStack flavor
+that’s being deployed (RDO has its own _Product Name_ entry), for
+example.
+
+Sometimes this can come in quite handy, for example when you want to
+verify what your cloud service provider is telling you about what
+OpenStack release they are running in a certain region.
