@@ -44,4 +44,18 @@ body {
 	    opacity: 1 !important;
 	}
     }
+
+    .stamp {
+        position: absolute;
+        color: red !important;
+        font-size: 3em !important;
+        font-family: "Special Elite" !important;
+        transform: rotate(-45deg);
+        position:absolute;
+        left:50%;
+        top:50%;
+        margin-left:-20vw;
+        margin-top:-10vh;
+        text-shadow: none;
+    }
 }
