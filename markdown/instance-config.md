@@ -26,7 +26,7 @@ done
 
 exit $?
 ```
-# Nope <!-- .element class="fragment stamp" -->
+# Rejected <!-- .element class="fragment stamp" -->
 
 <!-- Note -->
 This is what `user-data` *typically* looks like.
