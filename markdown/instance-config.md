@@ -1,11 +1,17 @@
 # 2
 ## Fast instance configuration
-with `cloud-config`
+with user-data
 
+<!-- Note -->
+The second thing I’d like to talk about is a pretty remarkably
+under-utilized OpenStack Nova feature, namely Nova user-data. 
+
+
+## openstack server create <!-- .element class="hidden" -->
 
 ```bash
 openstack server create \
-  --image trusty-server-cloudimg-amd64 \
+  --image bionic-server-cloudimg-amd64 \
   --key-name mykey \
   --flavor m1.small \
   --user-data userdata.txt \
@@ -13,6 +19,19 @@ openstack server create \
   test0
 ```
 
+<!-- Note -->
+User data is essentially a text file that is made available to the
+instance — and this can happen in several ways, it can be injected
+into the instance via a magic HTTP URL, or via config-drive, etc. —,
+and then that data is picked up by `cloud-init`, running in the
+instance operating system on first boot.
+
+We have multiple ways to specify how user data should be loaded into
+the instance, but the simplest is to just pass the `--user-data`
+option to `openstack server create`, as you can see here.
+
+
+## frobnication example <!-- .element class="hidden" -->
 
 ```sh
 #!/bin/sh -e
@@ -29,16 +48,74 @@ exit $?
 # Rejected <!-- .element class="fragment stamp" -->
 
 <!-- Note -->
-This is what `user-data` *typically* looks like.
+And *often*, this is what `user-data` looks like. `cloud-init` will
+parse any “shebang” (`#!`) at the top of the user-data as a reference
+to an interpreter, and if that interpreter is available to the system,
+then it will execute the script content using that interpreter.
+
+And most people use a shell script for this purpose. But it _could_
+also be, say, a Python or Perl script.
+
+* It’s not a good idea to do this.
+
+Chances are, if you’re writing your user-data in shell, Python, Perl,
+or whatever, you’ll be doing a lot of things by hand, that you can
+really do much simpler.
+
+
+## What’s wrong with scripts in user-data?
+
+<!-- Note -->
+Now to illustrate what I mean, and **why** using scripts — of any
+type: shell, Python, Perl, whatever — in user-data is a bad idea, let
+me give you a quick example.
+
+
+## Consider: upgrading all packages on first boot <!-- .element class="hidden" -->
+Consider: upgrading all packages on first boot
+
+<!-- Note -->
+Consider this: 
+
+Say you want to update all your installed packages on first
+boot. That’s generally a smart and perfectly reasonable thing to do,
+because your image may be several months old and may lack critical
+patches. And of course you don’t want to have an insecure, unpatched
+system from the get-go.
+
+
+## Multiple package managers <!-- .element class="hidden" -->
+
+`apt-get` <!-- .element class="fragment" -->
+
+`zypper` <!-- .element class="fragment" -->
+
+`yum` <!-- .element class="fragment" -->
+
+`dnf` <!-- .element class="fragment" -->
+
+<!-- Note -->
+So now, you’d have to first detect what system you’re running on, and
+then depending on that, your shell script would have to invoke
+
+* `apt` or `apt-get` on Debian and Ubuntu,
+* `zypper` on SLES and openSUSE,
+* `yum` on older Fedora and CentOS releases,
+* `dnf` on newer Fedora and CentOS releases,
+
+and so on. It would be messy. And you can do it much more easily.
 
 
 ### Instead: use `cloud-config`
 
+<!-- Note -->
+What you *really* want to do is use `cloud-config`. `cloud-config` is
+a YAML-based format that `cloud-init` will **also** happily parse for
+you, as it does with shell scripts, except you can do things much more
+easily. Such as:
 
-### `package_update`
-### `package_upgrade`
-Update system on first boot
 
+## package_update/package_upgrade <!-- .element class="hidden" -->
 
 ```yaml
 #cloud-config
@@ -47,10 +124,19 @@ package_update: true
 package_upgrade: true
 ```
 
+<!-- Note -->
+This is is **all** you need to put into your user data in order to get
+your system’s installed packages to the latest that are
+available. That’s just two lines of YAML, and those will achieve the
+desired effect on **any** system that `cloud-init` runs on.
 
-### `users`
-Configure users and groups
+Meaning it’s now `cloud-init` that takes care of the decision of
+whether it needs to invoke `apt`, or `zypper`, or `dnf`, or `yum` to
+update the package cache and upgrade all installed packages; you no
+longer need to take care of that yourself.
 
+
+## users <!-- .element class="hidden" -->
 
 ```yaml
 users:
@@ -64,19 +150,28 @@ users:
   sudo: "ALL=(ALL) NOPASSWD:ALL"
 ```
 
+<!-- Note -->
+You can also define users, including their group membership, preferred
+shell, `sudo` privileges, and you can even preseed their password.
 
-### `ssh_pwauth`
-Enable/disable SSH password authentication
 
+## ssh_pwauth <!-- .element class="hidden" -->
 
-```
+```yaml
 ssh_pwauth: true
 ```
 
+<!-- Note -->
+You might want to enable users to log into cloud instances using their
+username and password, as opposed to their public SSH key. 
 
-### `write_files`
-Write arbitrary files
+That’s a single boolean that you need to set, and you will no longer
+need to worry about what the `sshd` daemon is named on the target
+platform, or what its configuration file is, or what’s the right
+syntax to reload the daemon, or anything else.
 
+
+## write_files <!-- .element class="hidden" -->
 
 ```yaml
 write_files:
@@ -92,64 +187,14 @@ write_files:
 
     192.168.122.100 deploy.example.com deploy
     192.168.122.111 alice.example.com alice
-    192.168.122.112 bob.example.com bob
-    192.168.122.113 charlie.example.com charlie
 ```
 
-
-### `puppet`
-Configure a VM's Puppet agent
-
-
-```yaml
-puppet:
- conf:
-   agent:
-     server: "puppetmaster.example.org"
-     certname: "%i.%f"
-   ca_cert: |
-     -----BEGIN CERTIFICATE-----
-     MIICCTCCAXKgAwIBAgIBATANBgkqhkiG9w0BAQUFADANMQswCQYDVQQDDAJjYTAe
-     Fw0xMDAyMTUxNzI5MjFaFw0xNTAyMTQxNzI5MjFaMA0xCzAJBgNVBAMMAmNhMIGf
-     MA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCu7Q40sm47/E1Pf+r8AYb/V/FWGPgc
-     b014OmNoX7dgCxTDvps/h8Vw555PdAFsW5+QhsGr31IJNI3kSYprFQcYf7A8tNWu
-     SIb3DQEBBQUAA4GBAH/rxlUIjwNb3n7TXJcDJ6MMHUlwjr03BDJXKb34Ulndkpaf
-     +GAlzPXWa7bO908M9I8RnPfvtKnteLbvgTK+h+zX1XCty+S2EQWk29i2AdoqOTxb
-     hppiGMp0tT5Havu4aceCXiy2crVcudj3NFciy8X66SoECemW9UYDCb9T5D0d
-     -----END CERTIFICATE-----
-```
+<!-- Note -->
+You might want to write out arbitrary files, and you can do that, too,
+including setting their ownership and permission bits.
 
 
-### `chef`
-Configure a VM's Chef client
-
-
-```yaml
-chef:
- install_type: "packages"
- force_install: false
- server_url: "https://chef.yourorg.com:4000"
- node_name: "your-node-name"
- environment: "production"
- validation_name: "yourorg-validator"
- validation_key: |
-     -----BEGIN RSA PRIVATE KEY-----
-     YOUR-ORGS-VALIDATION-KEY-HERE
-     -----END RSA PRIVATE KEY-----
- run_list:
-  - "recipe[apache2]"
-  - "role[db]"
- initial_attributes:
-    apache:
-      prefork:
-        maxclients: 100
-      keepalive: "off"
-```
-
-
-### `packages`
-Install packages
-
+## packages <!-- .element class="hidden" -->
 
 ```yaml
 packages:
@@ -157,20 +202,12 @@ packages:
   - git
 ```
 
-
-### `bootcmd`
-Run commands early in the boot sequence
-
-
-```yaml
-bootcmd:
-- ntpdate pool.ntp.org
-```
+<!-- Note -->
+You can install additional packages not included in the base image, by
+simply providing a `packages` list.
 
 
-# `runcmd`
-Run commands late in the boot sequence
-
+## runcmd <!-- .element class="hidden" -->
 
 ```yaml
 runcmd:
@@ -180,3 +217,13 @@ runcmd:
     -U https://github.com/hastexo/academy-ansible
     -o site.yml
 ```
+
+<!-- Note -->
+And even if you *do* run into something that requires a script
+because `cloud-config` doesn’t support it natively, you can do that
+too, with the `runcmd` list that specifies a list of commands to run
+at the end of the initial boot sequence.
+
+So, bottom line: user-data is something you should totally use, but
+use it right. Use `cloud-config` and make full use of `cloud-init`’s
+features, don’t write your own scripts.
