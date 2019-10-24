@@ -1,4 +1,4 @@
-# 7
+# 6
 
 ## The Cinder image-volume cache
 
