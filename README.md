@@ -1,4 +1,4 @@
-# The Little Bag O'Tricks
+# The Little Bag of Tricks
 10 things you might not know you can do with OpenStack
 
 A summary of lesser-known tricks and tweaks to apply in an OpenStack environment. Presented at the Open Infrastructure Summit in Shanghai, November 2019.
