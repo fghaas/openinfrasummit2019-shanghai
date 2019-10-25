@@ -79,7 +79,7 @@ When you do that (or have done that), you may be in for a rude
 surprise.
 
 
-<!-- .slide: data-background="https://meltdownattack.com/images/meltdown.min.svg" data-background-size="contain" -->
+<!-- .slide: data-background="images/meltdown.min.svg" data-background-size="contain" -->
 ### Meltdown <!-- .element class="hidden" -->
 
 <!-- Note -->
