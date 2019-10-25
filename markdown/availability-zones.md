@@ -69,4 +69,20 @@ Neutron however, we can define a list of AZs, so if one AZ is not
 available for say a router, then Neutron will try the next, and so on.
 
 
-### AZs follow each other
+### AZs are sticky
+
+<!-- Note -->
+One neat feature about AZs is that in many cases, you have to specify
+it on one resource only, and others will follow suit. For example, if
+you
+
+* create an instance in one Nova AZ,
+* and it is configured to boot from volume which is created on-the-fly
+  from an image,
+* and there’s also a Cinder AZ of the same name,
+
+then the image will be created in the “correct” AZ (i.e. the one that
+matches the instance).
+
+And this comes in particularly handy, in combination with the next
+feature I’ll talk about.

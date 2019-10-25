@@ -41,3 +41,10 @@ And once you do that, when Nova wakes one of your VMs from suspend, it
 will use its virtual serial port to send the `guest-set-time` command
 that `qemu-guest-agent` then processes from within the instance, so
 your VM has the correct system time right when it wakes up.
+
+The guest agent also does another thing that’s cool, which is that
+when you take a snapshot of an instance, it can automatically freeze
+and flush all I/O on all your mounted filesystems, so that the
+snapshot you take is one of a clean filesystem.
+
+And speaking of snapshots...
