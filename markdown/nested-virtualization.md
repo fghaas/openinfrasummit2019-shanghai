@@ -3,7 +3,8 @@
 ## Nested virtualization
 
 <!-- Note -->
-Nested virtualization is an interesting OpenStack use case.
+And finally: nested virtualization. This is an interesting OpenStack
+feature.
 
 Most people usually don’t need it, but if you do, it comes in quite
 handy.

@@ -11,6 +11,10 @@ shape with the `raw` format, you’d like to convert it.
 Normally, that means you need to download the image, convert it
 locally (with `qemu-img convert`), and re-upload it.
 
+That’s usually rather tedious and time-consuming, particularly when
+you’re dealing with a large image, and sit behind a slow internet
+connection.
+
 There’s also an extremely arcane taskflow syntax to do this in the
 Glance backend, but I’m about to show you a super easy way.
 
@@ -41,7 +45,7 @@ openstack image create \
 ... preserves the volume format <!-- .element class="fragment" -->
 
 <!-- Note -->
-And now with `openstack image create`, you create a new volume. This
+And now with `openstack image create`, you create a new image. This
 time, by passing in `--volume=<volume>`, you tell Glance to create an
 image populated with the volume’s content. 
 

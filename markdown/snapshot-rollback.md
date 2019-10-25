@@ -2,6 +2,12 @@
 
 ## Stack snapshot and rollback
 
+<!-- Note -->
+We can apply a snapshot operation not just to a single instance, but
+to a whole Heat stack.
+
+
+### openstack stack snapshot create <!-- .element class="hidden" -->
 
 ```bash
 openstack stack snapshot create \
@@ -35,11 +41,12 @@ What `heat-engine` does with respect to Cinder volumes
 (`OS::Cinder::Volume` resources) is actually something _other_ than
 create a volume _snapshot:_ in reality, it creates a volume _backup_
 using the `cinder-backup` service. If your cloud doesn’t run
-`cinder-backup`, then no snapshots for you. (The thinking behind this
-is that when you delete a stack and delete its volumes, then the
-volume snapshots go away as well. You normally don’t want that,
-instead you want your volume contents to be preserved for posterity in
-some way. Backups do that for you.)
+`cinder-backup`, then no snapshots for you. 
+
+(The thinking behind this is that when you delete a stack and delete
+its volumes, then the volume snapshots go away as well. You normally
+don’t want that, instead you want your volume contents to be preserved
+for posterity in some way. Backups do that for you.)
 
 
 ### Stack snapshots
@@ -52,4 +59,4 @@ at all for nested stacks (like the ones created by
 run `openstack stack snapshot create` on a stack with nested stacks,
 then the nested stack’s snapshot becomes not an error, but a no-op:
 you’ll end up with a snapshot in the `SNAPSHOT_COMPLETE` stage, which
-however doesn’t contain any resource snapshots at all.
+however doesn’t contain any nested resource snapshots at all.

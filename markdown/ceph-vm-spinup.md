@@ -6,10 +6,14 @@
 I want to talk about the importance of fast instance spin-up for a
 moment. Frequently, people would think that it doesn’t make much of a
 difference if we can spin up a Nova instance in, say, one or ten
-minutes. And that may well be true for some use cases, but you should
-be aware that there are others where instance spin-up speed is
-absolutely a factor. This is generally true under any circumstances
-where you’re aiming for maximum scalability and elasticity.
+minutes. 
+
+And that may well be true for some use cases, but you should be aware
+that there are others where instance spin-up speed is absolutely a
+factor.
+
+This is generally true under any circumstances where you’re aiming for
+maximum scalability and elasticity.
 
 
 ### Ceph
@@ -25,7 +29,10 @@ ephemeral storage.
 
 
 ### RBD
-Snapshots and Clones
+
+snapshots <!-- .element class="fragment" -->
+
+clones <!-- .element class="fragment" -->
 
 <!-- Note -->
 What we use here, specifically, is RBD.
@@ -33,7 +40,9 @@ What we use here, specifically, is RBD.
 RBD is the **RADOS Block Device,** which basically means that there is
 a device that behaves just like a regular block device, but underneath
 does some magic that translates all block I/O into RADOS object
-access. Like many other block device types, RBD is capable of creating
+I/O in a Ceph cluster. 
+
+Like many other block device types, RBD is capable of creating
 
 * _snapshots,_ that is a consistent read-only view of the block device
   at any arbitrary point-in-time;

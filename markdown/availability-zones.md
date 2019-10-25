@@ -13,11 +13,12 @@ for, and how exactly they work.
 
 <!-- Note -->
 AZs are meant to divvy up your (or your public cloud provider’s)
-_compute environment_ into _failure domains._ That is, by operating
-AZs a cloud provider makes the following statement: “If you are
-running resources in one AZ and there is an outage
-affecting that AZ, then resources you choose to run in _other_ AZs
-will be unaffected by that same outage.”
+_compute environment_ into _failure domains._
+
+That is, by operating AZs a cloud provider makes the following
+statement: “If you are running resources in one AZ and there is an
+outage affecting that AZ, then resources you choose to run in _other_
+AZs will be unaffected by that same outage.”
 
 
 ### What are AZs not?
@@ -44,10 +45,11 @@ Regions
 <!-- Note -->
 Regions are separate OpenStack clouds in their own right, normally
 unified by a single service catalog, user authentication scheme, and
-possibly global image store. As such they transcend the compute-only
-scope that is inherent to AZs, cells, and host aggregrates. Any region
-contain zero or more AZs, but any AZ can only ever be in a single
-region.
+possibly global image store. 
+
+As such they transcend the compute-only scope that is inherent to AZs,
+cells, and host aggregrates. Any region contain zero or more AZs, but
+any AZ can only ever be in a single region.
 
 
 ### What supports AZs?
@@ -81,8 +83,8 @@ you
   from an image,
 * and there’s also a Cinder AZ of the same name,
 
-then the image will be created in the “correct” AZ (i.e. the one that
-matches the instance).
+then the Cinder volume will be created in the “correct” AZ (i.e. the
+one that matches the instance).
 
-And this comes in particularly handy, in combination with the next
+And this comes in particularly handy in combination with the next
 feature I’ll talk about.

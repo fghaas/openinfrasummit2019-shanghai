@@ -19,7 +19,7 @@ signal to a running hypervisor process, and then the corresponding
 `resume` command would send a `CONT` signal. Indeed, that’s what
 `virsh suspend` does in libvirt. 
 
-* **That is not what it does.**
+* **That is not what `openstack server suspend` does.**
 
 Instead, `suspend` in Nova-speak corresponds to what libvirt calls a
 “managed save” operation: the content of the virtual machine’s memory
@@ -33,11 +33,13 @@ state, populates its memory from the savefile.
 ... is (almost) free.
 
 <!-- Note -->
-Now this means that while the instance is “suspended”, it consumes
-**zero** RAM, and **zero** CPU cycles. Since RAM-hours and CPU-hours
-are by far the most expensive thing to pay for in a public-cloud VM,
-that means that your instance will rack up almost no cost while it’s
-suspended.
+Now this means that while the instance is “suspended”, it’s
+effectively shut off.
+
+That also means it consumes **zero** RAM, and **zero** CPU
+cycles. Since RAM-hours and CPU-hours are by far the most expensive
+thing to pay for in a public-cloud VM, that means that your instance
+will rack up almost no cost while it’s suspended.
 
 I say *almost* because your cloud service provider will still charge
 you for things allocated disk space and publicly routable IP

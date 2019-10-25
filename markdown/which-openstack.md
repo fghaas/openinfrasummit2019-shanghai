@@ -17,8 +17,13 @@ Any takers? Anyone want to offer up a suggestion on how to that?
 The easiest way to get to that information is actually this command,
 which you might already be quite familiar with.
 
-`dmidecode` gives you a large amount of information about your system,
-and at the very top of its output, it has this:
+You’ve probably used `dmidecode` on your laptop, on a baremetal
+server, or perhaps even on your Raspberry Pi or OpenWRT router.
+
+It gives you a large amount of information about your system —
+including characteristics of your CPU and RAM, and network hardware,
+and storage, and peripherals —, and at the very top of its output, it
+has this:
 
 
 ## dmidecode output <!-- .element class="hidden" -->
