@@ -19,6 +19,7 @@ There’s also an extremely arcane taskflow syntax to do this in the
 Glance backend, but I’m about to show you a super easy way.
 
 
+### openstack volume create --image <!-- .element class="hidden" -->
 ```bash
 openstack volume create \
   --image=<image> \
@@ -37,6 +38,7 @@ initialize the volume with the contents of the image.
   into the volume.
 
 
+### openstack image create --volume <!-- .element class="hidden" -->
 ```bash
 openstack image create \
   --volume=<volume> \
