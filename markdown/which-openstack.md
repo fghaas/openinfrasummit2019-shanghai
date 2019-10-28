@@ -47,8 +47,8 @@ System Information
 This information is actually populated by Nova, in conjunction with
 Libvirt, and not only does it tell you the Nova release you’re running
 on, it also gives you some information about the OpenStack flavor
-that’s being deployed (RDO has its own _Product Name_ entry), for
-example.
+that’s being deployed (RDO has its own _Product Name_ entry, for
+example).
 
 Sometimes this can come in quite handy, for example when you want to
 verify what your cloud service provider is telling you about what

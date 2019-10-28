@@ -29,6 +29,7 @@ ephemeral storage.
 
 
 ### RBD
+#### (RADOS Block Device)
 
 snapshots <!-- .element class="fragment" -->
 
@@ -73,7 +74,7 @@ Glance RBD snapshot → Cinder RBD clone
 You can also use this same approach for boot-from-volume. It’s
 essentially exactly the same process, except the clone being created
 is now a persistent volume that lives in Cinder. But just as with
-ephemeral boot from Cinder, the snapshot creation is practically
+ephemeral boot from Glance, the snapshot creation is practically
 instantaneous, and your VM boots in mere seconds.
 
 
