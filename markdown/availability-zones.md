@@ -9,16 +9,30 @@ is rather undeserved. But you should be aware what they can be used
 for, and how exactly they work.
 
 
-### What are AZs?
+### What are Availability Zones (AZs)?
 
 <!-- Note -->
 AZs are meant to divvy up your (or your public cloud provider’s)
 _compute environment_ into _failure domains._
 
+
+<!-- .slide: data-background-image="images/azs.svg" data-background-size="contain" -->
+### Intact AZs <!-- .element class="hidden" -->
+
+<!-- Note -->
 That is, by operating AZs a cloud provider makes the following
 statement: “If you are running resources in one AZ and there is an
 outage affecting that AZ, then resources you choose to run in _other_
 AZs will be unaffected by that same outage.”
+
+
+<!-- .slide: data-background-image="images/azs-failed.svg" data-background-size="contain" -->
+### Failed AZ <!-- .element class="hidden" -->
+
+<!-- Note -->
+Like this: the entirety of my AZ “Left” has failed, but I as the cloud
+service provider am guaranteeing to my users/customers that the
+resources in the AZ “Right” are not affected by the same problem.
 
 
 ### What are AZs not?
