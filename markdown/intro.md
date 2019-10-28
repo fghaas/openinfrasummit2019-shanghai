@@ -12,11 +12,6 @@ Open Infrastructure Summit Shanghai
 2019-11-05
 
 <!-- Note -->
-你们好。 我很高兴您在这里，也感谢您有机会与您交谈。
-
-Nǐmen hǎo. Wǒ hěn gāoxìng nín zài zhèlǐ, yě gǎnxiè nín yǒu jīhuì yǔ nín
-jiāotán.
-
 Welcome.
 
 This talk is a about a few helpful handy things that OpenStack can do
