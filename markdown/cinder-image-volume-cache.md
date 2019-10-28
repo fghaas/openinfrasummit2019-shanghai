@@ -12,7 +12,7 @@ another. So you could have multiple physical locations, as shown here:
 
 
 ### Cinder and Glance in multi-AZ setup <!-- .element class="hidden" -->
-<!-- .slide: data-background="images/cinder-image-volume-cache.svg" data-background-size="contain" -->
+<!-- .slide: data-background="images/cinder-image-volume-cache.svg" data-background-size="contain" data-timing="60" -->
 
 <!-- Note -->
 Here we’ve got a single OpenStack region, with three data centers
