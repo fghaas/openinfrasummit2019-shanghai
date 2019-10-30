@@ -86,6 +86,8 @@ system from the get-go.
 
 ## Multiple package managers <!-- .element class="hidden" -->
 
+Detect distro, then invoke:
+
 `apt-get` <!-- .element class="fragment" -->
 
 `zypper` <!-- .element class="fragment" -->
