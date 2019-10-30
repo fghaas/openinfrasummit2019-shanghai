@@ -12,6 +12,8 @@ understand what these actions do.
 ### `openstack server suspend`
 ... doesn’t suspend your server. <!-- .element class="fragment" -->
 
+It “managed-saves” your server. <!-- .element class="fragment" -->
+
 <!-- Note --> 
 Most people would think that `openstack server suspend` (or its
 deprecated equivalent, `nova suspend`) essentially just send a `STOP`
@@ -21,20 +23,20 @@ signal to a running hypervisor process, and then the corresponding
 
 * **That is not what `openstack server suspend` does.**
 
-Instead, `suspend` in Nova-speak corresponds to what libvirt calls a
-“managed save” operation: the content of the virtual machine’s memory
-is written to a file (called a “savefile”), and then the KVM instance
-is shut down. When it starts back up, libvirt detects that there is a
-savefile, and immediately after bringing up the instance in a paused
-state, populates its memory from the savefile.
+* Instead, `suspend` in Nova-speak corresponds to what libvirt calls a
+  “managed save” operation: the content of the virtual machine’s
+  memory is written to a file (called a “savefile”), and then the KVM
+  instance is shut down. When it starts back up, libvirt detects that
+  there is a savefile, and immediately after bringing up the instance
+  in a paused state, populates its memory from the savefile.
 
 
 ### `openstack server suspend`
 ... is (almost) free.
 
 <!-- Note -->
-Now this means that while the instance is “suspended”, it’s
-effectively shut off.
+Now this means that while the instance is “suspended” (managed-saved),
+it’s effectively shut off.
 
 That also means it consumes **zero** RAM, and **zero** CPU
 cycles. Since RAM-hours and CPU-hours are by far the most expensive
