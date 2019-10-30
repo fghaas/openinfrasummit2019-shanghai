@@ -27,7 +27,7 @@ that `qemu-ga` requires to communicate with the instance.
 ### qemu-guest-agent package <!-- .element class="hidden" -->
 
 ```yaml
-# cloud-config
+#cloud-config
 packages:
   - qemu-guest-agent
 ```

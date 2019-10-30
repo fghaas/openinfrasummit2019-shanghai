@@ -15,16 +15,25 @@ used for, and how exactly they work.
 AZs are meant to divvy up your (or your public cloud provider’s)
 _compute environment_ into _failure domains._
 
+That is, by operating AZs a cloud provider makes the following
+statement:
+
+
+> If resources are running in **one** AZ  
+> that is affected by an outage,  
+> then resources that run in **other** AZs  
+> will be unaffected by that **same** outage.
+
+<!-- Note -->
+If you are running resources in **one** AZ and there is an outage
+affecting that AZ, then resources you choose to run in **other** AZs
+will be unaffected by that **same** outage.
+
 
 <!-- .slide: data-background-image="images/azs.svg" data-background-size="contain" -->
 ### Intact AZs <!-- .element class="hidden" -->
 
 <!-- Note -->
-That is, by operating AZs a cloud provider makes the following
-statement: “If you are running resources in one AZ and there is an
-outage affecting that AZ, then resources you choose to run in _other_
-AZs will be unaffected by that same outage.”
-
 So here I have an AZ named “Left” running some resources, and an AZ
 “Right” running others. So what I can expect is that if one of the AZs
 fails, resources in the *other* AZ won’t be affected by that same
