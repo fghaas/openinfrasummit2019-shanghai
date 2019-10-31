@@ -22,9 +22,9 @@ But over time I’ve come to realize that a remarkable number of even
 experienced OpenStack users and operators don’t know about them. So
 I’m here to change that.
 
-My name’s Florian, I am in charge of professional services and
-education at City Network, and for the past 6 years I’ve helped people
-deploy, operate, and understand OpenStack.
+My name’s Florian, I am in charge of education at City Network, and
+for the past 7 years I’ve helped people deploy, operate, use, and
+understand OpenStack.
 
 Now this talk assumes that you have *some* familiarity with *using*
 OpenStack. It doesn’t make any assumptions about your experience
