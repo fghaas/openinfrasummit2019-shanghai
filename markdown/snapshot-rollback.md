@@ -48,16 +48,3 @@ The thinking behind this is that if you are ever to *delete* a stack
 go away as well. You normally don’t want that, instead you want your
 volume contents to be preserved for posterity in some way. Backups do
 that for you.
-
-
-### Stack snapshots
-Limitations
-
-<!-- Note -->
-Heat has a particularly hurtful UX issue in that snapshots don’t work
-at all for nested stacks (like the ones created by
-`OS::Heat::ResourceGroup`), and worse, that they fail silently: if you
-run `openstack stack snapshot create` on a stack with nested stacks,
-then the nested stack’s snapshot becomes not an error, but a no-op:
-you’ll end up with a snapshot in the `SNAPSHOT_COMPLETE` stage, which
-however doesn’t contain any nested resource snapshots at all.
